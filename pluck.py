@@ -7,6 +7,7 @@ random.seed(10)
 def pluck(freq, dur, velocity, tone):
     """
     velocity: 0-127
+    tone: 0-100
     """
     fs = 44100
     N = round(fs * dur) # no. of samples
