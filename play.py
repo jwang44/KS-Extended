@@ -1,10 +1,14 @@
 import pyaudio
+from matplotlib import pyplot as plt
 import pluck
 
-note1 = pluck.pluck_a_note(282, 5, 100, 100)
+note1 = pluck.pluck_note(282, 3, 100, 100, False)
+note2 = pluck.pluck_note(282, 3, 100, 100, True)
 
-# fig = plt.figure()
+# fig1 = plt.figure()
 # plt.plot(note1)
+# fig2 = plt.figure()
+# plt.plot(note2)
 # plt.show()
 
 # instantiate PyAudio (1)
@@ -18,6 +22,7 @@ stream = p.open(format=p.get_format_from_width(2),
 
 # play stream (3), blocking call
 stream.write(note1)
+stream.write(note2)
 
 # stop stream (4)
 stream.stop_stream()
