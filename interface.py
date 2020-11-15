@@ -1,4 +1,4 @@
-import play.pluck
+import pluck
 import tkinter as tk
 
 def pri(text="hhhhhhhhh"):
