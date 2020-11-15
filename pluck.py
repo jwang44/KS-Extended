@@ -1,8 +1,6 @@
 import numpy as np
 from scipy.signal import lfilter
-import matplotlib.pyplot as plt
 from collections import deque
-import pyaudio
 import random
 random.seed(10)
 
