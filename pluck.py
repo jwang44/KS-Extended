@@ -119,3 +119,24 @@ def pluck_note(freq=440, dur=3, velocity=100, tone=100, dist=True, gain=30):
         note = np.array(note * 32767, 'int16') 
 
     return note
+
+def pluck_chord(freqs=[70, 120, 140], dur=3, velocity=100, tone=100, dist=False, gain=30):
+    fs = 44100
+    N = round(dur * fs)
+    chord = np.zeros(N)
+    for freq in freqs:
+        note = pluck_note(freq, dur, velocity, tone, dist=False)
+        chord = chord + note
+    chord = chord / max(max(chord), abs(min(chord)))
+
+    if dist:
+        chord = chord * gain
+        dist_chord = chord - chord**3/3
+        dist_chord[chord>1] = 2/3
+        dist_chord[chord<-1] = -2/3
+        # convert to 16bit, for pyaudio to play
+        chord = np.array(dist_chord * 32767, 'int16') 
+    else:
+        chord = np.array(chord * 32767, 'int16') 
+
+    return chord
