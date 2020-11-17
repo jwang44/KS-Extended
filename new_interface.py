@@ -31,12 +31,12 @@ bend_check = tk.Checkbutton(frame, text='bend', variable=bend_bool)
 freq_scale = tk.Scale(master=frame, from_=82, to=440, orient=tk.HORIZONTAL, label='freq', length=425)
 tone_scale = tk.Scale(master=frame, from_=10, to=100, orient=tk.HORIZONTAL, label='tone', length=425, showvalue=0)
 gain_scale = tk.Scale(master=frame, from_=1, to=100, orient=tk.HORIZONTAL, label='gain', length=425, showvalue=0)
-freq2_scale = tk.Scale(master=frame, from_=82, to=440, orient=tk.HORIZONTAL, label='freq', length=425)
+freq2_scale = tk.Scale(master=frame, from_=82, to=440, orient=tk.HORIZONTAL, label='bend to', length=425)
 
 pluck_btn = tk.Button(
     master=frame,text="pluck",width=25,height=3,
     command=lambda: stream.write(
-        pluck.pluck_note_bend(
+        pluck.pluck_note(
             freq=freq_scale.get(), 
             tone=tone_scale.get(), 
             dist=dist_bool.get(),
