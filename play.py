@@ -2,7 +2,8 @@ import pyaudio
 from matplotlib import pyplot as plt
 import pluck
 
-note2 = pluck.pluck_note(freq=82, dist=True, bend=False)
+#note2 = pluck.pluck_matlab(freq=82, dist=False, bend=False, fb_ratio=0.4)
+note2 = pluck.pluck_matlab(freq=182, dist=True, gain=1, feedback=True, fb_ratio=0.4, bend=True, bend_to=260)
 #note2 = pluck.pluck_note(freq=100, bend_to=82, dist=False)
 # bend1 = pluck.pluck_note_bend(freq=110, dist=False, gain=20, bend=False, bend_to=80)
 #bend2 = pluck.pluck_note_bend(freq=330, dist=False, gain=20, bend=True, bend_to=300)
