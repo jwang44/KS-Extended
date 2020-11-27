@@ -31,8 +31,8 @@ label = tk.Label(master=frame,text="Hello GuitarDemo",fg="white",bg="black",widt
 fb_check = tk.Checkbutton(frame, text='feedback', variable=fb_bool)
 bend_check = tk.Checkbutton(frame, text='bend', variable=bend_bool)
 freq_scale = tk.Scale(master=frame, from_=82, to=440, orient=tk.HORIZONTAL, label='freq', length=425)
-dur_scale = tk.Scale(master=frame, from_=3, to=8, orient=tk.HORIZONTAL, label='dur', length=425)
-tone_scale = tk.Scale(master=frame, from_=10, to=100, orient=tk.HORIZONTAL, label='tone', length=425, showvalue=0)
+dur_scale = tk.Scale(master=frame, from_=300, to=800, orient=tk.HORIZONTAL, label='dur', length=425, showvalue=0)
+tone_scale = tk.Scale(master=frame, from_=0, to=100, orient=tk.HORIZONTAL, label='tone', length=425, showvalue=0)
 gain_scale = tk.Scale(master=frame, from_=1, to=20, orient=tk.HORIZONTAL, label='gain', length=425, showvalue=0)
 freq2_scale = tk.Scale(master=frame, from_=82, to=440, orient=tk.HORIZONTAL, label='bend to', length=425)
 
@@ -41,7 +41,7 @@ pluck_btn = tk.Button(
     command=lambda: stream.write(
         pluck.pluck_matlab(
             freq=freq_scale.get(), 
-            dur=dur_scale.get(),
+            dur=dur_scale.get()/100,
             tone=tone_scale.get(),
             gain=gain_scale.get(),
             bend=bend_bool.get(),

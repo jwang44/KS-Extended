@@ -185,11 +185,12 @@ def pluck_matlab(freq=440, dur=6, velocity=127, tone=100, gain=1.5, bend=False, 
 
     # tone control
     a = 1 / (2*np.cos(2*np.pi*freq/fs)+1)
-    passes = int(-0.3 * tone + 30); # map tone(0~100) to pass(100~0)
+    passes = int(-0.1 * tone + 10) # map tone(0~100) to pass(30~0)
     for i in range(passes):
         dl = lfilter([a,a,a], 1, dl)
-        dl = dl.tolist()
         # if passed througth this, dl will become an np array
+        # use tolist() to change it back to list
+        dl = dl.tolist()
     
     xm2ave = 0; # x[n-2] for 3-point averaging lp filter
     xm1ave = 0; # x[n-1] for 3-point averaging lp filter
@@ -216,7 +217,7 @@ def pluck_matlab(freq=440, dur=6, velocity=127, tone=100, gain=1.5, bend=False, 
                     c1 = c1 + 1
                     dl.pop() # delayline length decrease by one
                     D = D - 1
-                c0 = 1 - c1
+                # c0 = 1 - c1
             else:
                 c1 = c1 + bend_incre
                 if c1 > 1:
@@ -224,12 +225,15 @@ def pluck_matlab(freq=440, dur=6, velocity=127, tone=100, gain=1.5, bend=False, 
                     dl.append(0) # delayline length increase by one
                     D = D + 1
                     # produce glitch in sound
+            c0 = 1 - c1
             incre_no = incre_no + 1
 
             if incre_no * bend_incre >= bend_amount:
                 bend = False
 
         # *0.99 help decay
+        if ptr > D-1:
+            ptr = 0
         x = dl[ptr]
         # 3-point averaging
         y_avg = (a0*x + a1*xm1ave + a0*xm2ave) #* 0.998
