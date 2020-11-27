@@ -22,12 +22,14 @@ frame_border_effects = {
 }
 
 # dist_bool = tk.BooleanVar()
+# chord_bool = tk.BooleanVar()
 fb_bool = tk.BooleanVar()
 bend_bool = tk.BooleanVar()
 frame = tk.Frame(relief=tk.GROOVE, borderwidth=5)
 label = tk.Label(master=frame,text="Hello GuitarDemo",fg="white",bg="black",width=25,height=2)
 
 #dist_check = tk.Checkbutton(frame, text='distortion', variable=dist_bool)
+# chord_check = tk.Checkbutton(frame, text='chord', variable=chord_bool)
 fb_check = tk.Checkbutton(frame, text='feedback', variable=fb_bool)
 bend_check = tk.Checkbutton(frame, text='bend', variable=bend_bool)
 freq_scale = tk.Scale(master=frame, from_=82, to=440, orient=tk.HORIZONTAL, label='freq', length=425)
@@ -51,8 +53,24 @@ pluck_btn = tk.Button(
         )
     )
 
+chord_btn = tk.Button(
+    master=frame,text="pluck chord",width=25,height=3,
+    command=lambda: stream.write(
+        pluck.pluck_chord_matlab(
+            freq=freq_scale.get(), 
+            dur=dur_scale.get()/100,
+            tone=tone_scale.get(),
+            gain=gain_scale.get(),
+            bend=bend_bool.get(),
+            bend_to=freq2_scale.get(),
+            feedback=fb_bool.get()
+            )
+        )
+    )
+
 label.pack()
 pluck_btn.pack()
+chord_btn.pack()
 
 #dist_check.pack()
 fb_check.pack()

@@ -270,3 +270,32 @@ def pluck_matlab(freq=440, dur=6, velocity=127, tone=100, gain=1.5, bend=False, 
 
     note = np.array(note * 32767, 'int16') 
     return note
+
+def pluck_chord_matlab(freq=130.8, dur=5, velocity=127, tone=100, gain=1, bend=False, bend_to=500, feedback=False, fb_ratio=0.4):
+    fs = 44100
+    N = round(dur * fs)
+    chord = np.zeros(N)
+    # just intonation freq ratio 4:5:6
+    freqs = [0,0,0]
+    freqs[0] = freq
+    freqs[1] = freq*1.25
+    freqs[2] = freq*1.5
+
+    bends_to = [0,0,0]
+    bends_to[0] = bend_to
+    bends_to[1] = bend_to*1.25
+    bends_to[2] = bend_to*1.5
+
+    for freq, bend_to in zip(freqs, bends_to):
+        note = pluck_matlab(freq, dur, velocity, tone, gain=gain, bend=bend, bend_to=bend_to, feedback=feedback)
+        chord = chord + note
+    chord = chord / max(max(chord), abs(min(chord)))
+
+    #if dist:
+    chord = chord * gain
+    dist_chord = chord - chord**3/3
+    dist_chord[chord>1] = 2/3
+    dist_chord[chord<-1] = -2/3
+    # convert to 16bit, for pyaudio to play
+    chord = np.array(dist_chord * 32767, 'int16') 
+    return chord
