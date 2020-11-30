@@ -178,7 +178,8 @@ def pluck_matlab(freq=440, dur=6, velocity=127, tone=100, gain=1.5, bend=False, 
     a0 = 0.05; a1 = 0.9  
 
     # dc-blocking parameters
-    dc_block_co = 2*np.pi*freq/fs/10
+    # dc_block_co = 2*np.pi*freq/fs/10
+    dc_block_co = freq/fs/10
     dc_block_a0 = 1/(1+dc_block_co/2)
     dc_block_a1 = -dc_block_a0
     dc_block_b1 = dc_block_a0 * (1 - dc_block_co/2)
