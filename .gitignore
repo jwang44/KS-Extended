@@ -1,3 +1,4 @@
 __pycache__/*
 test.py
-play.py
+python/__pycache__/*
+.DS_Store
